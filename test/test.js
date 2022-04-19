@@ -9,6 +9,6 @@ var operacion = require('../operation.js');
 // Test
 it('comprobar función par', function() {
 	assert.equal(operacion.par(4), true);
-	assert.equal(operacion.suma(5), false);
-	assert.equal(operacion.suma(8), true);
+	assert.equal(operacion.par(5), false);
+	assert.equal(operacion.par(8), true);
 });
