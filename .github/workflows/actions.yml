@@ -1,32 +1,37 @@
-name: Ejecución de tests en Node con GitHub Actions
+# This is a basic workflow to help you get started with Actions
 
+name: CI
+
+# Controls when the workflow will run
 on:
+  # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    # Ejecutar la acción al hacer un push a la rama "master"
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    # Ejecutar la acción al hacer una pull request a la rama "master"
-    branches: [ master ]
+    branches: [ main ]
 
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  # This workflow contains a single job called "build"
   build:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    strategy:
-      # Podemos indicar distintas versiones de Node sobre las que ejecutar los tests
-      matrix:
-        node-version: [10.x, 12.x, 14.x, 15.x]
 
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Paso 1: clonar el repositorio
-    - uses: actions/checkout@v2
-    # Paso 2: utilizar la versión de Node correspondiente
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    # npm ci es "clean install", parecido a "npm install" pero con una instalación limpia
-    - run: npm ci
-    # Paso opcional en caso de que haya que hacer algún "build"
-    - run: npm run build --if-present
-    # Ejecución de los tests
-    - run: npm test
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+          npm test
