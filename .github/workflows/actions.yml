@@ -25,12 +25,14 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      # Paso 2: utilizar la versión de Node correspondiente
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      # npm ci es "clean install", parecido a "npm install" pero con una instalación limpia
+      - run: npm ci
+      # Paso opcional en caso de que haya que hacer algún "build"
+      - run: npm run build --if-present
+      # Ejecución de los tests
+      - run: npm test
